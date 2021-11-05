@@ -37,31 +37,33 @@ public class Automata {
 
   
 	/** 
-     * A=0  B=1  C=2  D=3   E=4   F=5  H=6 I=7 J=8
+     * A=0  B=1  C=2  E=3   I=4   X=5  Y=6 Z=7 W=8 SF=9
      * ERROR = -1
      */
 
-    int [][] estados = new int[9][6];
+    int [][] estados = new int[10][13];
     {
-        //  L                          D                    .                       P                      A                      G
+        //  /                          N                    "                       "                      S                      G                     L                      -                    D                          0                        P               espacio             salto de linea
         //A
-        estados[0][0]= 1;       estados[0][1]= 2;     estados[0][2]= -1 ;   estados[0][3]= 3  ;     estados[0][4]= 4  ;   estados[0][5]= 8;   
+        estados[0][0]= 1;       estados[0][1]= -1;    estados[0][2]= 2 ;   estados[0][3]= -1  ;     estados[0][4]= -1  ;   estados[0][5]= 7;    estados[0][6]= 7;       estados[0][7]= 3;    estados[0][8]= 8 ;    estados[0][9]= 9  ;    estados[0][10]= 9 ;   estados[0][11]= -1;     estados[0][12]= -1;     
         //B
-        estados[1][0]= 5  ;     estados[1][1]= 5  ;   estados[1][2]= -1 ;   estados[1][3]= -1 ;     estados[1][4]= -1 ;   estados[1][5]= -1 ;   
+        estados[1][0]= 4  ;     estados[1][1]= -1 ;   estados[1][2]= -1 ;  estados[1][3]= -1 ;      estados[1][4]= -1 ;    estados[1][5]= -1;   estados[1][6]=-1  ;     estados[1][7]= -1 ;  estados[1][8]= -1 ;   estados[1][9]= -1 ;    estados[1][10]= -1;   estados[1][11]= -1;     estados[1][12]= -1 ; 
         //C 
-        estados[2][0]= -1 ;     estados[2][1]= 2  ;   estados[2][2]= 6  ;   estados[2][3]= -1 ;     estados[2][4]= -1 ;   estados[2][5]= -1 ;   
-        //D 
-        estados[3][0]= -1 ;     estados[3][1]= -1 ;   estados[3][2]= -1 ;   estados[3][3]= -1 ;     estados[3][4]= -1 ;   estados[3][5]= -1 ;   
-        //E
-        estados[4][0]= -1 ;     estados[4][1]= -1 ;   estados[4][2]= -1 ;   estados[4][3]= -1 ;     estados[4][4]= -1 ;   estados[4][5]= -1 ;   
-        //F 
-        estados[5][0]= 5  ;     estados[5][1]= 5  ;   estados[5][2]= -1 ;   estados[5][3]= -1 ;     estados[5][4]= -1 ;   estados[5][5]= -1 ;   
-        //H 
-        estados[6][0]= -1 ;     estados[6][1]= 7  ;   estados[6][2]= -1 ;   estados[6][3]= -1 ;     estados[6][4]= -1 ;   estados[6][5]= -1 ;   
+        estados[2][0]= -1 ;     estados[2][1]= 5  ;   estados[2][2]= -1;   estados[2][3]= -1 ;      estados[2][4]= 5 ;     estados[2][5]= -1 ;  estados[2][6]= 5  ;     estados[2][7]= -1;   estados[2][8]= -1  ;  estados[2][9]= -1 ;    estados[2][10]= -1;   estados[2][11]= 5 ;     estados[2][12]= -1;
+        //E 
+        estados[3][0]= -1 ;     estados[3][1]= -1 ;   estados[3][2]= -1 ;  estados[3][3]= -1 ;      estados[3][4]= -1 ;    estados[3][5]= -1 ;  estados[3][6]= -1 ;     estados[3][7]= -1;   estados[3][8]=  8 ;   estados[3][9]= -1 ;    estados[3][10]= -1;   estados[3][11]= -1 ;    estados[3][12]= -1 ;   
         //I
-        estados[7][0]= -1 ;     estados[7][1]= 7  ;   estados[7][2]= -1 ;   estados[7][3]= -1 ;     estados[7][4]= -1 ;   estados[7][5]= -1 ;   
-        //J  
-        estados[8][0]= -1 ;     estados[8][1]= -1 ;   estados[8][2]= -1 ;   estados[8][3]= -1 ;     estados[8][4]= -1 ;   estados[8][5]= -1 ;   
+        estados[4][0]= -1 ;     estados[4][1]= 6 ;    estados[4][2]= -1 ;  estados[4][3]= -1 ;      estados[4][4]= 6 ;     estados[4][5]= 6 ;   estados[4][6]= 6  ;     estados[4][7]= -1;   estados[4][8]= -1 ;   estados[4][9]= -1 ;    estados[4][10]= -1;   estados[4][11]= 6 ;     estados[4][12]= -1;
+        //X 
+        estados[5][0]= -1 ;     estados[5][1]= 5  ;   estados[5][2]= -1 ;  estados[5][3]= 9 ;       estados[5][4]= 5 ;     estados[5][5]= -1 ;  estados[5][6]= 5 ;      estados[5][7]= -1;   estados[5][8]= -1 ;   estados[5][9]=-1 ;     estados[5][10]=-1 ;   estados[5][11]= 5 ;     estados[5][12]=-1 ;
+        //Y 
+        estados[6][0]= -1 ;     estados[6][1]= 6  ;   estados[6][2]= -1 ;  estados[6][3]= -1 ;      estados[6][4]= 6 ;     estados[6][5]= 6 ;   estados[6][6]= 6  ;     estados[6][7]= -1;   estados[6][8]= -1 ;   estados[6][9]= -1 ;    estados[6][10]=-1 ;   estados[6][11]= 6 ;     estados[6][12]= -1 ;
+        //Z
+        estados[7][0]= -1 ;     estados[7][1]= 7  ;   estados[7][2]= -1 ;   estados[7][3]= -1 ;     estados[7][4]= -1 ;    estados[7][5]= 7 ;   estados[7][6]= 7 ;      estados[7][7]= -1  ; estados[7][8]= -1 ;   estados[7][9]= -1 ;    estados[7][10]= -1 ;  estados[7][11]= -1 ;    estados[7][12]= -1 ;
+        //W  
+        estados[8][0]= -1 ;     estados[8][1]= -1 ;   estados[8][2]= -1 ;   estados[8][3]= -1 ;     estados[8][4]= -1 ;    estados[8][5]= -1 ;  estados[8][6]= -1 ;     estados[8][7]= -1 ;  estados[8][8]= 8 ;    estados[8][9]= 8 ;     estados[8][10]= -1 ;  estados[8][11]= -1 ;    estados[8][12]= -1 ; 
+        //SF  
+        estados[9][0]= -1 ;     estados[9][1]= -1 ;   estados[9][2]= -1 ;   estados[9][3]= -1 ;     estados[9][4]= -1 ;    estados[9][5]= -1 ;  estados[9][6]= -1 ;     estados[9][7]= -1 ;  estados[9][8]= -1 ;   estados[9][9]= -1 ;    estados[9][10]= -1 ;  estados[9][11]= -1 ;    estados[9][12]= -1 ; 
     }
 
 
