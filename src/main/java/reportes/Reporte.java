@@ -14,6 +14,7 @@ public class Reporte {
                              //I E P A D G !
     private int[] contadores= {0,0,0,0,0,0,0};
     Token []tokens = Token.values();
+    ArrayList<Object> lexemas = new ArrayList<>();
 
     //PALABRAS VALIDAS
     private ArrayList<String> palabrasAgregadas = new ArrayList<>();
