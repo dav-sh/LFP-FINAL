@@ -1,7 +1,7 @@
 package reportes;
 
 import java.util.ArrayList;
-
+import analizador.Lexema;
 import analizador.Token;
 
 /** 
@@ -14,7 +14,7 @@ public class Reporte {
                              //I E P A D G !
     private int[] contadores= {0,0,0,0,0,0,0};
     Token []tokens = Token.values();
-    ArrayList<Object> lexemas = new ArrayList<>();
+    ArrayList<Lexema> lexemas = new ArrayList<>();
 
     //PALABRAS VALIDAS
     private ArrayList<String> palabrasAgregadas = new ArrayList<>();
@@ -66,7 +66,8 @@ public class Reporte {
      * @param fila  fila en la cual se encontra la palabra
      */
     private void contadorEstados(Token tmp, String palabra, int columna, int fila) {
-        
+
+        /*
         if(tmp==Token.IDENTIFICADOR || tmp==Token.IDENTIFICADOR2){
             contadores[0]++;
             registrar(palabra, columna, fila,Token.IDENTIFICADOR.getNombreEstado());
@@ -96,6 +97,8 @@ public class Reporte {
             registrarError(palabra, columna, fila);
         }
 
+        */
+
     }
 
 
@@ -106,8 +109,12 @@ public class Reporte {
       * @param token token recibido
       * @return retorna el valor(int) del token recibido
       */
+
+    /*
     public int getcontadorEstado(Token token) {
         int contador=0;
+
+        
         switch (token) {
             case IDENTIFICADOR:
                 contador = contadores[0];
@@ -148,7 +155,11 @@ public class Reporte {
                 break;
         }
         return contador;
+
+        
     }
+
+    */
 
     /**
      * Este metodo se encarga de devolver el array (int) de los contadores 

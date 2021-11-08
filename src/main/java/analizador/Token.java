@@ -6,9 +6,10 @@ public enum Token {
     /**Tokens validos */
   
 
-    COMENTARIO(9,"COMENTARIO | LITERAL"),
+    COMENTARIO(9,"COMENTARIO | LITERAL | 0 | P_RESERV"),
     IDENTIFICADOR(7, "IDENTIFICADOR"), 
     ENTERO(8, "ENTERO"),
+    RESERVADA(11, "RESERVADA"),
     
 
     /**Token invalido */
@@ -49,6 +50,7 @@ public enum Token {
         this.estado = estado;
         this.nombre = nombre;
     }
+
 
 }
 

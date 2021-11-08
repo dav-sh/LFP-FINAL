@@ -3,6 +3,8 @@ package analizador;
 import javax.swing.*;
 import javax.swing.JTextArea;
 import reportes.Reporte;
+import reportes.ReporteV2;
+
 import java.awt.*;
 
 
@@ -17,19 +19,20 @@ public class Automata {
     int fila=1;
     int columna = 1;
     int estadoActual = 0;
+    int estadoInicio=100;
     Token []tokens = Token.values();
-    Reporte reporte = null;
+    ReporteV2 reporte = null;
     //int estadosAceptacion[] = {1,2,3,4,5,7,8}; //B,C,D,E,F,I,J
     //git stash para eliminar cambios no guardados con commit
 
     /**
      * Constructor de la clase automata
      * @param textArea recibe text area a analizar
-     * @param report    recibe el objeto reporte al cual se le agregaran los nuevos registros
+     * @param reportV2    recibe el objeto reporte al cual se le agregaran los nuevos registros
      */
-    public Automata(JTextArea textArea, Reporte report) { 
+    public Automata(JTextArea textArea, ReporteV2 reportV2) { 
         movimiento = new StringBuilder();
-        this.reporte = report;
+        this.reporte = reportV2;
         texto=textArea.getText();
         leeTexto();
         muestraMovimiento(movimiento.toString());
@@ -51,11 +54,11 @@ public class Automata {
         //C 
         estados[2][0]= -1 ;     estados[2][1]=-1  ;   estados[2][2]= 5 ;       estados[2][3]=-1 ;     estados[2][4]= 5;    estados[2][5]=-1  ;     estados[2][6]= 5 ;   estados[2][7]=  5  ;  estados[2][8]= -1 ;    estados[2][9]= 5 ;   estados[2][10]= -1;     
         //E 
-        estados[3][0]= -1 ;     estados[3][1]= -1 ;   estados[3][2]= -1 ;      estados[3][3]= -1 ;    estados[3][4]= -1 ;  estados[3][5]= -1 ;     estados[3][6]= -1;   estados[3][7]= -1 ;   estados[3][8]= -1 ;    estados[3][9]= -1;   estados[3][10]= -1 ;       
+        estados[3][0]= -1 ;     estados[3][1]= -1 ;   estados[3][2]= -1 ;      estados[3][3]= -1 ;    estados[3][4]= -1 ;  estados[3][5]= -1 ;     estados[3][6]= 8;    estados[3][7]= -1 ;   estados[3][8]= -1 ;    estados[3][9]= -1;   estados[3][10]= -1 ;       
         //I
-        estados[4][0]= -1 ;     estados[4][1]= 6 ;    estados[4][2]= 6  ;      estados[4][3]=-1 ;     estados[4][4]= 6 ;   estados[4][5]= -1 ;     estados[4][6]=  6;   estados[4][7]= 6  ;   estados[4][8]= -1 ;    estados[4][9]= 6 ;   estados[4][10]= -1 ;     
+        estados[4][0]= -1 ;     estados[4][1]= -1 ;   estados[4][2]= 6  ;      estados[4][3]=-1 ;     estados[4][4]= 6 ;   estados[4][5]= -1 ;     estados[4][6]=  6;   estados[4][7]= 6  ;   estados[4][8]= -1 ;    estados[4][9]= 6 ;   estados[4][10]= -1 ;     
         //S1 
-        estados[5][0]= -1 ;     estados[5][1]= -1 ;   estados[5][2]= 5 ;       estados[5][3]=-1 ;     estados[5][4]= 5;    estados[5][5]= -1;      estados[5][6]= 5 ;   estados[5][7]= 5  ;   estados[5][8]=-1 ;     estados[5][9]=5  ;   estados[5][10]= -1 ;     
+        estados[5][0]= -1 ;     estados[5][1]= 9 ;    estados[5][2]= 5 ;       estados[5][3]=-1 ;     estados[5][4]= 5;    estados[5][5]= -1;      estados[5][6]= 5 ;   estados[5][7]= 5  ;   estados[5][8]=-1 ;     estados[5][9]=5  ;   estados[5][10]= -1 ;     
         //S2
         estados[6][0]= -1 ;     estados[6][1]=-1  ;   estados[6][2]= 6 ;       estados[6][3]=-1 ;     estados[6][4]= 6 ;   estados[6][5]= -1 ;     estados[6][6]= 6 ;   estados[6][7]= 6  ;   estados[6][8]= -1 ;    estados[6][9]=6  ;   estados[6][10]= 9 ;     
         //S3
@@ -94,8 +97,9 @@ public class Automata {
      * @return  regresa el String completo de la palabra a evaluar
      */
 
+    
     public String getEstadoActual(int estadoActual) {
-        String result = "Error "+estadoActual;
+        String result = "";
         for(Token tmp : tokens) {
             if(tmp.getNumeroEstado()==estadoActual) {
                 result = tmp.getNombreEstado();
@@ -104,6 +108,8 @@ public class Automata {
         }
         return result;
     }
+
+    
 
 
 
@@ -118,59 +124,72 @@ public class Automata {
      */
     public int getIntTipoCaracter(char caracter) {
         //Definimos el alfabeto restante
-        char [] symbols={':',',',';','/','<','>','=','(',')','[',']','{','}','-','_'};
-        //char [] dig={'1','2','3','4','5','6','7','8','9'};
-
-        
+        char [] symbolsV1={':',',',';','/','<','>','=','(',')','[',']','{','}','-','_','.','!','?','*','+'};
+        char [] symbolsV2={':',',',';','/','<','>','=','(',')','[',']','{','}','-','_','"','.','!','?','*','+'};
 
         //Si no lo encuentra devuelve un error identificado como -1
         int result = -1;
 
-        //Dependiendo el orden de las columnas, es el valor que debe de devolver en este caso son de 0-13 
+        System.out.println("Evaluando el caracter: " + caracter);
+
+        //Dependiendo el orden de las columnas, es el valor que debe de devolver 
         //        Σ = /, “, S,	G, L, -, D,	0,	P,	espacio,	Salto de linea  
-
-
-        if(caracter=='/'){
+        if(caracter=='/' && (estadoInicio==1 || estadoInicio==100) && estadoActual!=6){
             result =0;
         }
         
-        else if(caracter=='"'){
+        if(caracter=='"' || caracter== '“' || caracter== '”' &&(estadoInicio==2 || estadoInicio==100) ){
+            
             result =1;
+            
         }
 
-        for(char c:symbols){
-            if(caracter==c){
-                result =2;
+        if(estadoActual ==5 || estadoActual==6  || estadoActual==2 || estadoActual==4){
+            if(estadoActual==5){
+                for(char c:symbolsV1){
+                    if(caracter==c){
+                        result =2;
+                    }
+                }
+
+            }else{
+                for(char c:symbolsV2){
+                    if(caracter==c){
+                        result =2;
+                    }
+                }
             }
+
         }
 
-        if(caracter=='_'){
+        if(caracter=='_' && (estadoInicio ==7 || estadoInicio==100)){
             result =3;
         }
 
-        else if(Character.isLetter(caracter)){
+        if(Character.isLetter(caracter)){
             result =4;
+            System.out.println("El caracter: " + caracter + " devuelve " + result);
         }
 
-        else if(caracter=='-'){
+        if(caracter=='-' && (estadoInicio==100 || estadoInicio==7 )){
             result =5;
         }
 
-        else if(Character.isDigit(caracter) && caracter!='0'){
+        if(Character.isDigit(caracter) && caracter!='0'){
             result =6;
         }
 
-        else if(caracter=='0'){
+        if(caracter=='0'){
             result =7;
         }
 
         //Aqui iria palabra ---> 8
 
-        else if(Character.isSpaceChar(caracter)){
+        if(Character.isSpaceChar(caracter)){
             result =9;
         }
 
-        else if(Character.toString(caracter).equals("\n")){
+        if(Character.toString(caracter).equals("\n")){
             result =10;
         }
 
@@ -193,11 +212,16 @@ public class Automata {
     *Metodo encargado de continuar leer el texto mientras recorre cada char de la palabra a analizar
     */
     public void leeTexto(){
-        reporte.resetContadores(); //Aqui se resetean los valores de los contadores, al iniciar un nuevo analisis
-        reporte.resetArrays(); //Aqui se resetean los arrays con las palabras y posicones de error
+
+    
+        //reporte.resetContadores(); //Aqui se resetean los valores de los contadores, al iniciar un nuevo analisis
+        //reporte.resetArrays(); //Aqui se resetean los arrays con las palabras y posicones de error
+        reporte.cleanReport();
         while(posicion<texto.length()){
             leePalabra();
         }
+
+        
     }
 
 
@@ -215,47 +239,59 @@ public class Automata {
         boolean continuar = true;
         while(posicion<texto.length() && continuar){
             char c = texto.charAt(posicion);
-            
-            //Aqui se evalua si el caracter es un espacio o salto de linea
-            if(Character.isSpaceChar(c) ||  Character.toString(c).equals("\n")){  
-                continuar = false;
+            System.out.println("\n Caracter "+ c+ " pos "+posicion);
+           
+            int numeroCaracter= getIntTipoCaracter(c);
+            //el segundo valor es el caracter que mandamos -->char que nos devuelve un int correspondiente a un tipo de token en el metodo getIntTipoCaracter
+            System.out.println("Estado actual "+estadoActual+ " numero que devuelve el caracter "+ numeroCaracter+" ahora pedimos valor a matriz ");
+            int estadoTemporal = getNextEstado(estadoActual, numeroCaracter); 
 
-                if(Character.toString(c).equals("\n")){
-                    System.out.println("Posicion:"+ columna + " = salto linea ");
-                    movimiento.append("Salto de linea\n");
-                    fila++; //Si dectecta un salto de linea aumenta en 1 el numero de filas
-                    columna=0; //inicializa en 0 ya que el contador la aumenta a 1
-                    
-                }else if(Character.isSpaceChar(c) ){ 
-                    System.out.println("Posicion:"+ columna + " = Espacio " );
-                    movimiento.append("Espacio\n");
-
-                }
-
-
+            if(estadoActual ==0){
+                //Guardamos el primer estado que calculamos, esto nos servira para evaluar el tipo de caracter y el numero que devuelve
+                estadoInicio = estadoTemporal;
+                System.out.println("Estado de inicio = "+estadoInicio);
             }
-            else{
-                //si el char(c) no es un espacio o columna, se agrega en la palabra 
-                palabra.append(c);
 
-                //el segundo valor es el caracter que mandamos (char) que nos devuelve un int correspondiente a un tipo de token en el metodo getIntTipoCaracter
-                int estadoTemporal = getNextEstado(estadoActual, getIntTipoCaracter(c)); 
+
+
+            if(estadoTemporal==-1 && Character.isSpaceChar(c)){
+                //Evaluamos si el siguiente estado es de error
+                continuar=false;
+                estadoInicio=100;
+                System.out.println("El siguiente estado es de error, por lo tanto reiniciamos automata para un nuevo analisis");
                 
-                //Si no detecta salto de linea o espacio reconoce la cadena como valida sin importar que este en error y guarda su posicion
-                System.out.println("estado actual "+estadoActual+" Caracter: "+c +" estado temporal(siguiente) "+ estadoTemporal+ " posicion: "+ posicion);
-                movimiento.append("estado actual "+estadoActual+" Caracter: "+c +" estado temporal(siguiente) "+ estadoTemporal+ " posicion: "+ posicion+"\n");
+
+
+            }else{
+                //Si el siguiente estado no es erroneo, realizamos las acciones correspondientes
+                palabra.append(c);
+                System.out.println("estado actual "+estadoActual+" Caracter: "+c + " posicion "+" estado temporal(siguiente) "+ estadoTemporal+ " posicion: "+ posicion+ " valor matriz actual "+ getNextEstado(estadoActual, numeroCaracter));
+                movimiento.append("estado actual "+estadoActual+" Caracter: "+c + " posicion "+" estado temporal(siguiente) "+ estadoTemporal+ " posicion: "+ posicion+ " valor matriz actual "+ getNextEstado(estadoActual, numeroCaracter)+"\n");
                 estadoActual = estadoTemporal;
                 columnaValida = columna;
                 filaValida = fila;
             }
+            
+            if(Character.toString(c).equals("\n")){
+                continuar=false;
+                estadoInicio=100;
+                System.out.println("Reiniciamos el automata ... debido al salto de linea");
+                fila++; //Si dectecta un salto de linea aumenta en 1 el numero de filas
+                columna=0; //inicializa en 0 ya que el contador la aumenta a 1
+            }
+        
             columna++;
             posicion++;
         }
-        System.out.println("Me movi del estado "+estadoActual + " al estado "+ getEstadoActual(estadoActual)+" con un(a) "+ palabra.toString()+" ->*columna: "+columnaValida + "  fila "+ filaValida);
-        //creamos el reporte el cual tiene por parametros el estado actual del token(si es valido o no), el lexema completo(palabra evaluada), el numero de columna en donde se encontro, el numeor de fila donde se encontro 
-        movimiento.append("Me movi del estado "+estadoActual + " al estado "+ getEstadoActual(estadoActual)+" con un(a) "+ palabra.toString()+" ->*columna: "+columnaValida + "  fila "+ filaValida+"\n");
-        reporte.contadorEstados(estadoActual,palabra.toString(),columnaValida,filaValida);
 
+       
+        
+        //creamos el reporte el cual tiene por parametros el estado actual del token(si es valido o no), el lexema completo(palabra evaluada), el numero de columna en donde se encontro, el numeor de fila donde se encontro 
+        System.out.println("Estado Actual "+estadoActual + " = "+ getEstadoActual(estadoActual)+" con palabra "+ palabra.toString()+" ->*columna: "+columnaValida + "  fila "+ filaValida+"\n");
+        movimiento.append("Estado final:" +getEstadoActual(estadoActual)+" palabra: "+ palabra.toString()+" Pos-> C "+columnaValida + " ,F "+ filaValida+"\n\n");
+        //reporte.contadorEstados(estadoActual,palabra.toString(),columnaValida,filaValida);
+        System.out.println("Lexema enviado a reporte"+palabra.toString());
+        reporte.evaluarLexema(estadoActual,palabra.toString(),columnaValida,filaValida);
     }
 
 

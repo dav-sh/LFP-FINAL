@@ -144,7 +144,8 @@ public class PanelReporte extends JPanel{
                 public void actionPerformed(ActionEvent e) {
                     // Aqui genera el otro reporte xd
                     System.out.println("soy reporete de tokens");
-                    new ReporteToken(getReporteTokens());
+                    //new ReporteToken();
+                    //new ReporteToken(getReporteTokens());
 
                 }
                 
@@ -160,6 +161,7 @@ public class PanelReporte extends JPanel{
     /**
      * Devuelve el array con el string[][] del token y su contador
     */
+    /*
     public String[][] getReporteTokens() {
         ArrayList<String> tokens = new ArrayList<>();
         ArrayList<Integer> contador = new ArrayList<>();
@@ -179,6 +181,7 @@ public class PanelReporte extends JPanel{
         
         return reporteTok;
     }
+    */
 
 
     
