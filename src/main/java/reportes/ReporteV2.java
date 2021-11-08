@@ -48,18 +48,27 @@ public class ReporteV2 {
             boolean similar=false;
             for(String tmp: reservadas){  //Si coindice con alguna de las palabras reservadas, cambiamos, los valores del Token
                 if(lexema.equals(tmp)){
+                    switch (tmp){
+                        case "ESCRIBIR":     lexemasValidos.add(new Lexema(lexema,Token.ESCRIBIR.getNumeroEstado(), Token.ESCRIBIR ,pos));                 break;
+                        case "FIN":       lexemasValidos.add(new Lexema(lexema,Token.FIN.getNumeroEstado(), Token.FIN ,pos));              break;
+                        case "REPETIR":        lexemasValidos.add(new Lexema(lexema,Token.REPETIR.getNumeroEstado(), Token.REPETIR ,pos));     break;
+                        case "INICIAR":          lexemasValidos.add(new Lexema(lexema,Token.INICIAR.getNumeroEstado(), Token.INICIAR ,pos));          break;
+                        case "SI":       lexemasValidos.add(new Lexema(lexema,Token.SI.getNumeroEstado(), Token.SI ,pos));              break;
+                        case "VERDADERO":lexemasValidos.add(new Lexema(lexema,Token.VERDADERO.getNumeroEstado(), Token.VERDADERO ,pos)); break;
+                        case "FALSO": lexemasValidos.add(new Lexema(lexema,Token.FALSO.getNumeroEstado(), Token.FALSO ,pos)); break;
+                        case "ENTONCES": lexemasValidos.add(new Lexema(lexema,Token.ENTONCES.getNumeroEstado(), Token.ENTONCES ,pos)); break; 
+                    }
+
                     similar=true;
                     break;
                 }
             }
             
-            if(similar){
-                
-                lexemasValidos.add(new Lexema(lexema,Token.RESERVADA.getNumeroEstado(), Token.RESERVADA ,pos));
-            }else{
-
+            if(!similar){
+                //AHPRA TENEMOS Q SEPARR CADA TOKEN
                 lexemasValidos.add(new Lexema(lexema,estadoFinal,tipoToken(estadoFinal),pos));
             }
+
         }
         else{  //Si no coincide con palabras reservadas simplemente se guarda
             System.out.println("Se registro el lexema en paso 2"+ lexema);
