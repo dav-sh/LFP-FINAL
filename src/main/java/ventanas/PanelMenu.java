@@ -7,8 +7,6 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.undo.UndoManager;
 import analizador.Automata;
-import analizador.Token;
-import reportes.Reporte;
 import reportes.ReporteV2;
 
 /**Clase encargada de manejar los elementos dentro del JPanel del menu principal. */

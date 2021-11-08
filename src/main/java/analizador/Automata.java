@@ -2,7 +2,6 @@ package analizador;
 
 import javax.swing.*;
 import javax.swing.JTextArea;
-import reportes.Reporte;
 import reportes.ReporteV2;
 
 import java.awt.*;
