@@ -125,6 +125,7 @@ public class Automata {
         //Definimos el alfabeto restante
         char [] symbolsV1={':',',',';','/','<','>','=','(',')','[',']','{','}','-','_','.','!','?','*','+'};
         char [] symbolsV2={':',',',';','/','<','>','=','(',')','[',']','{','}','-','_','"','.','!','?','*','+'};
+        char [] symbolsSint = {'+','(',')','='};
 
         //Si no lo encuentra devuelve un error identificado como -1
         int result = -1;
@@ -182,7 +183,14 @@ public class Automata {
             result =7;
         }
 
-        //Aqui iria palabra ---> 8
+        //Aqui iria palabra ---> 8  pero lo vamos a utilizar para los caracteres del sintactico xd xdxdxd
+        if(estadoInicio==9 || estadoInicio==100){
+            for(char c : symbolsSint){
+                if(c==caracter) {
+                    result =8;
+                }
+            }
+        }
 
         if(Character.isSpaceChar(caracter)){
             result =9;

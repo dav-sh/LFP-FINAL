@@ -6,10 +6,11 @@ public enum Token {
     /**Tokens validos */
   
 
-    COMENTARIO(9,"COMENTARIO | LITERAL | 0 | P_RESERV"),
     IDENTIFICADOR(7, "IDENTIFICADOR"), 
     ENTERO(8, "ENTERO"),
-
+    COMENTARIO(9,"COMENTARIO | LITERAL | 0 | P_RESERV"),
+    LITERAL(10,"LITERAL"),
+    
 
 
 
@@ -26,6 +27,9 @@ public enum Token {
     VERDADERO(17, "VERDADERO"),
     FALSO(18,"FALSO"),
     ENTONCES(19, "ENTONCES"),
+
+
+    //OTROS
 
     /**Token invalido */
     ERROR(-1, "ERROR"), 

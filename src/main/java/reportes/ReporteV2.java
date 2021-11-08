@@ -70,6 +70,24 @@ public class ReporteV2 {
             }
 
         }
+        else if(estadoFinal==Token.COMENTARIO.getNumeroEstado()){
+            char com = '"';
+            if(lexema.equals("0")){
+                //es un cero
+                lexemasValidos.add(new Lexema(lexema,Token.ENTERO.getNumeroEstado(), Token.ENTERO ,pos));  
+            }else if(lexema.startsWith("//")){
+                //es un comentario de una sola linea
+                lexemasValidos.add(new Lexema(lexema,Token.COMENTARIO.getNumeroEstado(), Token.COMENTARIO ,pos));  
+            }else if(lexema.startsWith(Character.toString(com))){
+                //es una literal
+                lexemasValidos.add(new Lexema(lexema,Token.LITERAL.getNumeroEstado(), Token.LITERAL ,pos));  
+            }
+            else{
+                //es un simbolo
+                lexemasValidos.add(new Lexema(lexema,Token.SIMBOLO.getNumeroEstado(), Token.SIMBOLO ,pos));  
+            }
+            
+        }
         else{  //Si no coincide con palabras reservadas simplemente se guarda
             System.out.println("Se registro el lexema en paso 2"+ lexema);
             lexemasValidos.add(new Lexema(lexema,estadoFinal,tipoToken(estadoFinal),pos));
