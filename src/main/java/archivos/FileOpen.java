@@ -18,17 +18,20 @@ public class FileOpen {
      * @param textarea text area en donde se escribira el texto
      * @param tlabel numero de linea para el texto
     */
-    public FileOpen(JTextArea textarea, JTextArea tlabel) {
-        this.textarea = textarea;
-        this.Tlabel = tlabel;
-        file();  
+    //public FileOpen(JTextArea textarea, JTextArea tlabel) {
+    public FileOpen() {
+        //this.textarea = textarea;
+        //this.Tlabel = tlabel;
+        //file();  
     }
 
 
     /**Metodo
      * Sirve para abrir el explorador de archivos y seleccionar el archivo de texto con extension .txt
     */
-    public void file(){
+    public void file(JTextArea textarea, JTextArea tlabel){
+        this.textarea = textarea;
+        this.Tlabel = tlabel;
         JFileChooser fileChooser = new JFileChooser(".");
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
             "Archivos de texto (.txt)", "txt");

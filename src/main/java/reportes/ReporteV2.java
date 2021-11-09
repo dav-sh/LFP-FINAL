@@ -25,7 +25,7 @@ public class ReporteV2 {
                 regTokenInv(estadoFinal,lexema,columna,fila);
             }
             else{
-                System.out.println("Se registro el lexema::"+ lexema);
+                System.out.println("Se registro el lexema:"+ lexema);
                 regTokenVal(estadoFinal,lexema,columna,fila);
             }
 
@@ -48,6 +48,7 @@ public class ReporteV2 {
             boolean similar=false;
             for(String tmp: reservadas){  //Si coindice con alguna de las palabras reservadas, cambiamos, los valores del Token
                 if(lexema.equals(tmp)){
+                    System.out.println("Se registro una palabra reservada");
                     switch (tmp){
                         case "ESCRIBIR":     lexemasValidos.add(new Lexema(lexema,Token.ESCRIBIR.getNumeroEstado(), Token.ESCRIBIR ,pos));                 break;
                         case "FIN":       lexemasValidos.add(new Lexema(lexema,Token.FIN.getNumeroEstado(), Token.FIN ,pos));              break;
@@ -65,12 +66,14 @@ public class ReporteV2 {
             }
             
             if(!similar){
+                System.out.println("Se registro un identificador");
                 //AHPRA TENEMOS Q SEPARR CADA TOKEN
                 lexemasValidos.add(new Lexema(lexema,estadoFinal,tipoToken(estadoFinal),pos));
             }
 
         }
         else if(estadoFinal==Token.COMENTARIO.getNumeroEstado()){
+            System.out.println("Registramos algo mas");
             char com = '"';
             if(lexema.equals("0")){
                 //es un cero
@@ -89,9 +92,12 @@ public class ReporteV2 {
             
         }
         else{  //Si no coincide con palabras reservadas simplemente se guarda
-            System.out.println("Se registro el lexema en paso 2"+ lexema);
-            lexemasValidos.add(new Lexema(lexema,estadoFinal,tipoToken(estadoFinal),pos));
+            if(estadoFinal==20){
+                System.out.println("Registre un seprador o eso creo ajajaj");
+                lexemasValidos.add(new Lexema(lexema,Token.SEPARADOR.getNumeroEstado(), Token.SEPARADOR ,pos));  
 
+            }
+            lexemasValidos.add(new Lexema(lexema,estadoFinal,tipoToken(estadoFinal),pos));
         }
     }
 
@@ -132,12 +138,14 @@ public class ReporteV2 {
 
     public Lexema[] getLexemasVal(){
         Lexema[] lexem = new Lexema[lexemasValidos.size()];
+        System.out.println("Existe algo? longitud= we me llamaste? "+ lexemasValidos.size() );
         for(int i=0;i<lexemasValidos.size(); i++){
             lexem[i]=lexemasValidos.get(i);
         }
 
         return lexem;
     }
+
 
 
     public Lexema[] getLexemasInv(){

@@ -3,6 +3,7 @@ package ventanas;
 import javax.swing.*;
 import java.awt.*;
 import analizador.Lexema;
+import analizador.Token;
 import reportes.ReporteV2;
 
 public class PanelReporteV2 extends JPanel{
@@ -49,18 +50,24 @@ public class PanelReporteV2 extends JPanel{
         }else{
             lexem = report.getLexemasVal();
         }
-        if(lexem.length > 0){
+        if(lexem.length > 0 ){
             for(int i=0; i<lexem.length; i++){  //Filas
                 for(int j=0; j<numCols; j++){
-                    if(j==0){
-                        table.setValueAt(lexem[i].getLine() , i, j);
-                    }else if(j==1){
-                        table.setValueAt(lexem[i].getToken().getNombreEstado() , i, j);
-                    }else if(j==2){
-                        table.setValueAt(lexem[i].getPos()[0], i, j);
-                    }else if(j==3){
-                        table.setValueAt(lexem[i].getPos()[1], i, j);
+
+                    if(lexem[i].getToken()!=Token.SEPARADOR && lexem[i].getToken()!=null){
+
+                        if(j==0){
+                            table.setValueAt(lexem[i].getLine() , i, j);
+                        }else if(j==1){
+                            table.setValueAt(lexem[i].getToken().getNombreEstado() , i, j);
+                        }else if(j==2){
+                            table.setValueAt(lexem[i].getPos()[0], i, j);
+                        }else if(j==3){
+                            table.setValueAt(lexem[i].getPos()[1], i, j);
+                        }
+
                     }
+
     
                 }
             }

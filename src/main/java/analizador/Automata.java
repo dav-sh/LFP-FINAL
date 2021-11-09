@@ -123,8 +123,8 @@ public class Automata {
      */
     public int getIntTipoCaracter(char caracter) {
         //Definimos el alfabeto restante
-        char [] symbolsV1={':',',',';','/','<','>','=','(',')','[',']','{','}','-','_','.','!','?','*','+'};
-        char [] symbolsV2={':',',',';','/','<','>','=','(',')','[',']','{','}','-','_','"','.','!','?','*','+'};
+        char [] symbolsV1={':',',',';','/','<','>','=','(',')','[',']','{','}','-','_','.','!','?','*','+','\''};
+        char [] symbolsV2={':',',',';','/','<','>','=','(',')','[',']','{','}','-','_','"','.','!','?','*','+','\''};
         char [] symbolsSint = {'+','(',')','='};
 
         //Si no lo encuentra devuelve un error identificado como -1
@@ -261,15 +261,31 @@ public class Automata {
 
 
 
-            if(estadoTemporal==-1 && Character.isSpaceChar(c)){
-                //Evaluamos si el siguiente estado es de error
+            if(estadoTemporal==-1 && Character.isSpaceChar(c) || Character.toString(c).equals("\t") || Character.toString(c).equals("\r")){
+                //Evaluamos si el estado temporal(actual) es de error, por lo tanto no guarda
                 continuar=false;
                 estadoInicio=100;
                 System.out.println("El siguiente estado es de error, por lo tanto reiniciamos automata para un nuevo analisis");
                 
+            }
+            else if(Character.toString(c).equals("\n") && estadoTemporal==-1) {
+                continuar=false;
+                estadoInicio=100;
+                System.out.println("Reiniciamos el automata ... debido al salto de linea..Pero no guardamos");
+                fila++; //Si dectecta un salto de linea aumenta en 1 el numero de filas
+                columna=0; //inicializa en 0 ya que el contador la aumenta a 1
+            }
 
 
-            }else{
+            else{
+                if(Character.toString(c).equals("\n")) {
+
+                    continuar=false;
+                    estadoInicio=100;
+                    System.out.println("Reiniciamos el automata ... debido al salto de linea");
+                    fila++; //Si dectecta un salto de linea aumenta en 1 el numero de filas
+                    columna=0; //inicializa en 0 ya que el contador la aumenta a 1
+                }
                 //Si el siguiente estado no es erroneo, realizamos las acciones correspondientes
                 palabra.append(c);
                 System.out.println("estado actual "+estadoActual+" Caracter: "+c + " posicion "+" estado temporal(siguiente) "+ estadoTemporal+ " posicion: "+ posicion+ " valor matriz actual "+ getNextEstado(estadoActual, numeroCaracter));
@@ -279,13 +295,6 @@ public class Automata {
                 filaValida = fila;
             }
             
-            if(Character.toString(c).equals("\n")){
-                continuar=false;
-                estadoInicio=100;
-                System.out.println("Reiniciamos el automata ... debido al salto de linea");
-                fila++; //Si dectecta un salto de linea aumenta en 1 el numero de filas
-                columna=0; //inicializa en 0 ya que el contador la aumenta a 1
-            }
         
             columna++;
             posicion++;
@@ -296,8 +305,11 @@ public class Automata {
         //creamos el reporte el cual tiene por parametros el estado actual del token(si es valido o no), el lexema completo(palabra evaluada), el numero de columna en donde se encontro, el numeor de fila donde se encontro 
         System.out.println("Estado Actual "+estadoActual + " = "+ getEstadoActual(estadoActual)+" con palabra "+ palabra.toString()+" ->*columna: "+columnaValida + "  fila "+ filaValida+"\n");
         movimiento.append("Estado final:" +getEstadoActual(estadoActual)+" palabra: "+ palabra.toString()+" Pos-> C "+columnaValida + " ,F "+ filaValida+"\n\n");
-        //reporte.contadorEstados(estadoActual,palabra.toString(),columnaValida,filaValida);
+        //Puede servir reporte.contadorEstados(estadoActual,palabra.toString(),columnaValida,filaValida);
         System.out.println("Lexema enviado a reporte"+palabra.toString());
+        if(getEstadoActual(estadoActual).equals("")){
+            estadoActual = 20;
+        }
         reporte.evaluarLexema(estadoActual,palabra.toString(),columnaValida,filaValida);
     }
 

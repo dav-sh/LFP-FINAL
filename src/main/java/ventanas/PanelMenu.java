@@ -120,7 +120,7 @@ public class PanelMenu extends JPanel {
 
 
         //Menu de Opciones
-        menu=new JComboBox<>(new String[]{"Abrir", "Nuevo","Guardar","Guardar Como"});
+        menu=new JComboBox<>(new String[]{"Menu","Abrir", "Nuevo","Guardar","Guardar Como"});
         c.gridx = 1; c.gridy = 0; c.gridwidth = 1; c.gridheight = 1; //posicion x,y cuantas casillas ocupa ancho, alto
         c.weighty=1.0; c.fill = GridBagConstraints.BOTH; 
         menu.setPreferredSize(new Dimension(10,10));
@@ -135,11 +135,12 @@ public class PanelMenu extends JPanel {
 				System.out.println("Elegiste: "+ menu.getSelectedItem().toString());
                 String opcion = menu.getSelectedItem().toString();
                 switch (opcion) {
-                    case "Abrir":    new archivos.FileOpen(textArea,tLabel);    ;  break;
+                    case "Abrir":    new archivos.FileOpen().file(textArea,tLabel);    break;
                     case "Nuevo":                    ;  break;
                     case "Guardar":                    ;  break;
                     case "Guardar Como":  new archivos.FileSave(textArea) ;  break;
                 }
+                menu.setSelectedIndex(0);
 			}
             
         });
