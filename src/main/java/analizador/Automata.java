@@ -125,7 +125,7 @@ public class Automata {
         //Definimos el alfabeto restante
         char [] symbolsV1={':',',',';','/','<','>','=','(',')','[',']','{','}','-','_','.','!','?','*','+','\''};
         char [] symbolsV2={':',',',';','/','<','>','=','(',')','[',']','{','}','-','_','"','.','!','?','*','+','\''};
-        char [] symbolsSint = {'+','(',')','='};
+        char [] symbolsSint = {'+','(',')','=','*'};
 
         //Si no lo encuentra devuelve un error identificado como -1
         int result = -1;
@@ -307,10 +307,19 @@ public class Automata {
         movimiento.append("Estado final:" +getEstadoActual(estadoActual)+" palabra: "+ palabra.toString()+" Pos-> C "+columnaValida + " ,F "+ filaValida+"\n\n");
         //Puede servir reporte.contadorEstados(estadoActual,palabra.toString(),columnaValida,filaValida);
         System.out.println("Lexema enviado a reporte"+palabra.toString());
+
+        /*
+        //Con esta registramos espacios y saltos de linea,bueno los pcos q puedo registrar
         if(getEstadoActual(estadoActual).equals("")){
             estadoActual = 20;
         }
         reporte.evaluarLexema(estadoActual,palabra.toString(),columnaValida,filaValida);
+        */
+
+        //aqui no vamos a registrar saltos de linea o espacos o cosas invalidas de seapracions, solo tokens validos
+        if(!getEstadoActual(estadoActual).equals("")){
+            reporte.evaluarLexema(estadoActual,palabra.toString(),columnaValida,filaValida);
+        }
     }
 
 
