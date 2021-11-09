@@ -15,7 +15,7 @@ public class Menu {
         JFrame frame = new JFrame("Inicio");
         frame.setDefaultCloseOperation(3);
         frame.add(new PanelMenu());
-        frame.setSize(900, 400);
+        frame.setSize(1000, 500);
         frame.setVisible(true);
         frame.setResizable(false);
         

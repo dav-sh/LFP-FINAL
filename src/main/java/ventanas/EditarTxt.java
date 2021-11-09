@@ -8,11 +8,21 @@ public class EditarTxt {
     }
 
     public void deshacer(){
-        menu.edit.undo();
+        try {
+            menu.edit.undo();
+            
+        } catch (Exception e) {
+            System.out.println("No habia nada");
+        }
     }
-
+    
     
     public void rehacer(){
-        menu.edit.redo();
+        try {
+            menu.edit.redo();
+            
+        } catch (Exception e) {
+            System.out.println("No habia nada");
+        }
     }
 }

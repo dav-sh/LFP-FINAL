@@ -404,7 +404,7 @@ public class PanelMenu extends JPanel {
              @Override
              public void actionPerformed(ActionEvent e) {
                 System.out.println("Yo hice el programa, pos quien mas xd");
-
+                muestraInfo();
                 
              }
              
@@ -460,5 +460,26 @@ public class PanelMenu extends JPanel {
 
 
 
+
+
+
+    private void muestraInfo() {
+        String mov = "Programa hecho por: Rolando David Orozco \nEstudiante de la carrera de Ingenieria en Sistemas CUNOC \nRegistro Academico: 201530401";
+        JFrame frameMov = new JFrame("Acerca de...");
+        JPanel panelMov = new JPanel();
+        panelMov.setLayout(new GridLayout());
+        JTextArea textareaMov = new JTextArea(mov);
+        textareaMov.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(textareaMov);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        panelMov.add(scrollPane);
+        frameMov.add(panelMov);
+        frameMov.setSize(375, 120);
+        frameMov.setVisible(true);
+        frameMov.setResizable(false);
+
+
+    }
 
 }
