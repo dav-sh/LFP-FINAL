@@ -1,6 +1,8 @@
 package ventanas;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.*;
 import analizador.Lexema;
 import analizador.Token;
@@ -19,31 +21,34 @@ public class PanelReporteV2 extends JPanel{
     }
 
     private void printReport(boolean hasError){
-        JTable table;
+        DefaultTableModel model = new DefaultTableModel();
+        JTable table = new JTable(model);
         GridBagConstraints c = new GridBagConstraints();
         c.gridx=0; c.gridy =0;c.gridwidth=2;c.gridheight=2;
         c.weighty=1.0; c.weightx=1.0; c.fill=GridBagConstraints.BOTH;
-        if(hasError){
-            table= new JTable(report.getLexemasInv().length, numCols);
-        }else{
-            table= new JTable(report.getLexemasVal().length, numCols);
-            
-        }
+        
+        model.addColumn("LEXEMA");
+        model.addColumn("TOKEN");
+        model.addColumn("FILA");
+        model.addColumn("COLUMNA");
+
+
         //Definimos nombre de las columnas
-        table.getColumnModel().getColumn(0).setHeaderValue("LEXEMA");
+        /*table.getColumnModel().getColumn(0).setHeaderValue("LEXEMA");
         table.getColumnModel().getColumn(1).setHeaderValue("TOKEN");
         table.getColumnModel().getColumn(2).setHeaderValue("FILA");
         table.getColumnModel().getColumn(3).setHeaderValue("COLUMNA");
-        
+        */
+
         //Llenamos la tabla
-        fillJTable(hasError, table);
+        fillJTable(hasError, model);
 
         JScrollPane scrollPane = new JScrollPane(table,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);    
         this.add(scrollPane,c);
     }
     
     
-    private void fillJTable(boolean hasError, JTable table){
+    private void fillJTable(boolean hasError, DefaultTableModel model ){
         Lexema [] lexem = null;
         if(hasError){
             lexem = report.getLexemasInv();
@@ -52,23 +57,8 @@ public class PanelReporteV2 extends JPanel{
         }
         if(lexem.length > 0 ){
             for(int i=0; i<lexem.length; i++){  //Filas
-                for(int j=0; j<numCols; j++){
-
-                    if(lexem[i].getToken()!=Token.SEPARADOR && lexem[i].getToken()!=null){
-
-                        if(j==0){
-                            table.setValueAt(lexem[i].getLine() , i, j);
-                        }else if(j==1){
-                            table.setValueAt(lexem[i].getToken().getNombreEstado() , i, j);
-                        }else if(j==2){
-                            table.setValueAt(lexem[i].getPos()[0], i, j);
-                        }else if(j==3){
-                            table.setValueAt(lexem[i].getPos()[1], i, j);
-                        }
-
-                    }
-
-    
+                if(lexem[i].getToken()!=Token.SEPARADOR && lexem[i].getToken()!=null){
+                    model.addRow(new Object[]{lexem[i].getLine(),lexem[i].getToken().getNombreEstado(),lexem[i].getPos()[0],lexem[i].getPos()[1]});
                 }
             }
         }
