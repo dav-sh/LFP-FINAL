@@ -3,10 +3,13 @@ package ventanas;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.undo.UndoManager;
 import analizador.Automata;
+import archivos.OnlySave;
 import reportes.ReporteV2;
 
 /**Clase encargada de manejar los elementos dentro del JPanel del menu principal. */
@@ -15,7 +18,7 @@ public class PanelMenu extends JPanel {
     JTextField textB;
     JTextArea tLabel;
     JComboBox<String> menu;
-    //Reporte report = new Reporte();
+    File rutaDoc=null;
     ReporteV2 reportV2 = new ReporteV2();
     UndoManager edit = new UndoManager();
     EditarTxt edicion = new EditarTxt(this);
@@ -58,7 +61,7 @@ public class PanelMenu extends JPanel {
        
 
         //text area
-        textArea = new JTextArea("Escribe algo",15,20);
+        textArea = new JTextArea("",15,20); //Escribe algo
         //Aqui trato de agregarle un scroll 
         JScrollPane scrollPane = new JScrollPane(textArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED );
         JScrollPane scrollPaneLabel = new JScrollPane(tLabel,JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -135,10 +138,34 @@ public class PanelMenu extends JPanel {
 				System.out.println("Elegiste: "+ menu.getSelectedItem().toString());
                 String opcion = menu.getSelectedItem().toString();
                 switch (opcion) {
-                    case "Abrir":    new archivos.FileOpen().file(textArea,tLabel);    break;
-                    case "Nuevo":                    ;  break;
-                    case "Guardar":                    ;  break;
-                    case "Guardar Como":  new archivos.FileSave(textArea) ;  break;
+                    case "Abrir":   
+                                    int b =JOptionPane.showConfirmDialog(null, "Desea Guardar los cambios?");
+                                    if(b==JOptionPane.YES_OPTION){
+                                        rutaDoc = new OnlySave().saveText(rutaDoc,textArea);
+                                        rutaDoc = new archivos.FileOpen().file(textArea,tLabel);   System.out.println("La ruta del archivo es"+ rutaDoc); 
+                                    }else if(b==JOptionPane.NO_OPTION){
+
+                                        rutaDoc = new archivos.FileOpen().file(textArea,tLabel);   System.out.println("La ruta del archivo es"+ rutaDoc); 
+
+                                    }break;
+                                       
+                    
+                    
+                    
+                    case "Nuevo":    int a =JOptionPane.showConfirmDialog(null, "Desea Guardar los cambios?");
+                                    if(a==JOptionPane.YES_OPTION){
+                                        rutaDoc = new OnlySave().saveText(rutaDoc,textArea);
+                                        rutaDoc = null;                
+                                        textArea.setText("");
+                                    }else if(a==JOptionPane.NO_OPTION){
+                                        rutaDoc = null;                
+                                        textArea.setText("");
+                                    }break;
+                                    
+
+
+                    case "Guardar":   rutaDoc = new OnlySave().saveText(rutaDoc,textArea) ;  break;
+                    case "Guardar Como":  rutaDoc=new archivos.FileSave().file(textArea) ;  break; //Tenemos que capturar la ruta de alguna forma
                 }
                 menu.setSelectedIndex(0);
 			}
@@ -189,84 +216,11 @@ public class PanelMenu extends JPanel {
 
         this.add(rehacer);
         
-        /*
-        //boton abrir
-        c.gridx = 7; c.gridy = 0; c.gridwidth = 1; c.gridheight = 1; 
-        c.weighty=1.0; c.fill = GridBagConstraints.HORIZONTAL; c.anchor = GridBagConstraints.NORTHEAST;
-
-        JButton a = createButton("Abrir", layout, c);
-        c.weighty=0.0;  c.anchor = GridBagConstraints.CENTER; //reset
-
-        a.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("Hola soy abrir");
-                new archivos.FileOpen(textArea,tLabel);
-			}
-            
-        });
-
-        this.add(a);
-
-        */
-        
-        
-        /*
-
-        //boton guardar
-        c.gridx = 3; c.gridy = 1; c.gridwidth = 1; c.gridheight = 1; 
-        c.weighty=1.0; c.anchor = GridBagConstraints.NORTHEAST; c.fill = GridBagConstraints.HORIZONTAL;
-
-        JButton g = createButton("Guardar", layout, c);
-        c.weighty=0.0; c.anchor = GridBagConstraints.CENTER; //reset
-
-        g.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("Hola soy Guardar");
-                new archivos.FileSave(textArea);
-			}
-            
-        });
-        this.add(g);
-
-
-
-        */
-
-        /*
-        //boton evaluar
-
-        c.gridx = 3; c.gridy = 2; c.gridwidth = 1; c.gridheight = 1; 
-        c.weighty=1.0; c.anchor = GridBagConstraints.NORTHEAST; 
-
-        JButton e = createButton("Evaluar", layout, c);
-        c.weighty=0.0; //reset
-
-        e.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("Hola soy Evaluar");
-                new Automata(textArea, report);
-                JOptionPane.showMessageDialog(null,"Analisis Realizado");
-
-			}
-            
-        });
-        this.add(e);
-
-
-
-
-        */
 
         //boton copiar
 
         c.gridx = 5; c.gridy = 0; c.gridwidth = 1; c.gridheight = 1; 
-        c.weighty=0.0; c.fill = GridBagConstraints.BOTH; //c.anchor = GridBagConstraints.NORTHEAST;
+        c.weighty=0.0; c.fill = GridBagConstraints.BOTH; 
         JButton copy = createButton("Copiar", layout, c);
         c.weighty=0.0; //reset
         copy.addActionListener(new ActionListener() {
@@ -286,7 +240,7 @@ public class PanelMenu extends JPanel {
         //boton pegar
 
         c.gridx = 6; c.gridy = 0; c.gridwidth = 1; c.gridheight = 1; 
-        c.weighty=0.0; c.fill = GridBagConstraints.BOTH; //c.anchor = GridBagConstraints.NORTHEAST;
+        c.weighty=0.0; c.fill = GridBagConstraints.BOTH; 
         JButton paste = createButton("Pegar", layout, c);
         c.weighty=0.0; //reset
         paste.addActionListener(new ActionListener() {
@@ -307,7 +261,7 @@ public class PanelMenu extends JPanel {
         //boton sintactico
 
         c.gridx = 8; c.gridy = 0; c.gridwidth = 1; c.gridheight = 1; 
-        c.weighty=0.0; c.fill = GridBagConstraints.BOTH; //c.anchor = GridBagConstraints.NORTHEAST;
+        c.weighty=0.0; c.fill = GridBagConstraints.BOTH; 
         JButton sintactico = createButton("A. Sinctactico", layout, c);
         c.weighty=0.0; //reset
         sintactico.addActionListener(new ActionListener() {
@@ -316,13 +270,6 @@ public class PanelMenu extends JPanel {
             public void actionPerformed(ActionEvent e) {
             System.out.println("Hola soy sintactico");
 
-            /*
-            if(report.getcontadorEstado(Token.ERROR)>=1){
-                new ReporteJF(true, report);
-            }else{
-                new ReporteJF(false, report);
-            }
-            */
             
             }
             
@@ -341,17 +288,8 @@ public class PanelMenu extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //new Automata(textArea, report);
                 new Automata(textArea, reportV2);
                 JOptionPane.showMessageDialog(null,"Analisis Realizado");
-
-            /*
-            if(report.getcontadorEstado(Token.ERROR)>=1){
-                new ReporteJF(true, report);
-            }else{
-                new ReporteJF(false, report);
-            }
-            */
             
             }
             
@@ -365,7 +303,7 @@ public class PanelMenu extends JPanel {
          //boton reportes
 
          c.gridx = 10; c.gridy = 0; c.gridwidth = 1; c.gridheight = 1; 
-         c.weighty=0.0; c.fill = GridBagConstraints.BOTH; //c.anchor = GridBagConstraints.NORTHEAST;
+         c.weighty=0.0; c.fill = GridBagConstraints.BOTH; 
          JButton r = createButton("Reportes", layout, c);
          c.weighty=0.0; //reset
          r.addActionListener(new ActionListener() {
@@ -376,16 +314,6 @@ public class PanelMenu extends JPanel {
 
                 new ReporteV2JF(reportV2.existenErrores(),reportV2);
 
-                /*
-                if(report.getcontadorEstado(Token.ERROR)>=1){
-                    new ReporteJF(true, report);
-                }else{
-                    new ReporteJF(false, report);
-                }
-                */
-
-                //new 
-                
              }
              
             });
@@ -396,7 +324,7 @@ public class PanelMenu extends JPanel {
          //boton Acerca de
 
          c.gridx = 10; c.gridy = 4; c.gridwidth = 1; c.gridheight = 1; 
-         c.weighty=0.0; c.fill = GridBagConstraints.BOTH; //c.anchor = GridBagConstraints.NORTHEAST;
+         c.weighty=0.0; c.fill = GridBagConstraints.BOTH; 
          JButton acerca = createButton("Acerca de", layout, c);
          c.weighty=0.0; //reset
          acerca.addActionListener(new ActionListener() {
@@ -416,7 +344,7 @@ public class PanelMenu extends JPanel {
 
 
         //JLabel de la parte inferior --> busqueda
-        textB = new JTextField("Buscar texto:");
+        textB = new JTextField("");
         c.gridx = 1; c.gridy = 4; c.gridwidth = 1; c.gridheight = 1; //posicion x,y cuantas casillas ocupa ancho, alto
         c.weighty=0.0; c.weightx=1.0; c.fill = GridBagConstraints.HORIZONTAL;
         textB.addMouseListener(new MouseAdapter() {

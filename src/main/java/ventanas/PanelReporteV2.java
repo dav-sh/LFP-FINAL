@@ -12,8 +12,6 @@ public class PanelReporteV2 extends JPanel{
 
 
     ReporteV2 report;
-    private int numCols=4;
-
     public PanelReporteV2(boolean hasError, ReporteV2 reporte){
         this.report = reporte;
         this.setLayout(new GridBagLayout());
@@ -33,12 +31,6 @@ public class PanelReporteV2 extends JPanel{
         model.addColumn("COLUMNA");
 
 
-        //Definimos nombre de las columnas
-        /*table.getColumnModel().getColumn(0).setHeaderValue("LEXEMA");
-        table.getColumnModel().getColumn(1).setHeaderValue("TOKEN");
-        table.getColumnModel().getColumn(2).setHeaderValue("FILA");
-        table.getColumnModel().getColumn(3).setHeaderValue("COLUMNA");
-        */
 
         //Llenamos la tabla
         fillJTable(hasError, model);

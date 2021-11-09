@@ -1,5 +1,7 @@
 package archivos;
 
+import java.io.File;
+
 import javax.swing.JFileChooser;
 import javax.swing.JTextArea;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -29,9 +31,10 @@ public class FileOpen {
     /**Metodo
      * Sirve para abrir el explorador de archivos y seleccionar el archivo de texto con extension .txt
     */
-    public void file(JTextArea textarea, JTextArea tlabel){
+    public File file(JTextArea textarea, JTextArea tlabel){
         this.textarea = textarea;
         this.Tlabel = tlabel;
+        File rutaDoc=null;
         JFileChooser fileChooser = new JFileChooser(".");
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
             "Archivos de texto (.txt)", "txt");
@@ -40,12 +43,13 @@ public class FileOpen {
         if(returnVal == JFileChooser.APPROVE_OPTION) {
             System.out.println("You chose to open this file: " +
                 fileChooser.getSelectedFile().getName());
+            rutaDoc= fileChooser.getSelectedFile();
                 try {
                     new ReadFile(fileChooser, this.textarea,Tlabel);
                 } catch (Exception e) {
                     System.out.println("No se envio el archivo o no se pudo elegir correctament");    
                 }
         }
-
+        return rutaDoc;
     }
 }

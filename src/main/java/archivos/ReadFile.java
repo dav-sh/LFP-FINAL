@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
 /** 
@@ -55,13 +56,14 @@ public class ReadFile {
         try {
             while((linea=rdr.readLine())!=null){
                 // count++; parte de
-                System.out.println(linea);
+                //System.out.println(linea); //Muestra las lineas en consola
                 updateText(linea);
 
             }
             
         } catch (Exception e) {
             System.out.println("Algo salio mal al leer el archivo de texto");
+            JOptionPane.showMessageDialog(null,"No se pudo abrir el archivo de texto, por favor revise su archivo.");
         }
     }
 
