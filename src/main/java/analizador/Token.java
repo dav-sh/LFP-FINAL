@@ -3,9 +3,9 @@ package analizador;
 /**Clase de tipo enum que nos indica los tokens validos y no validos utilizados en la clase Automata */
 public enum Token {
 
-    /**Tokens validos */
-  
-
+    /**
+     * Tokens validos 
+     */
     IDENTIFICADOR(7, "IDENTIFICADOR"), 
     ENTERO(8, "ENTERO"),
     COMENTARIO(9,"COMENTARIO"),
@@ -16,10 +16,17 @@ public enum Token {
 
 
     //ESTO SERVIRA PARA EL SIGNO = + U OTRO SIMBOLO USADO EN LAS ESTRUCTURAS SINTACTICAS
+    /**
+     * Token simbolo
+     */
     SIMBOLO(11, "SIMBOLO"),
 
 
+
     //RESERVADAS
+    /**
+     * Reservadas
+     */
     ESCRIBIR(12,"ESCRIBIR"),
     FIN(13, "FIN"),
     REPETIR(14, "REPETIR"),
@@ -30,12 +37,17 @@ public enum Token {
     ENTONCES(19, "ENTONCES"),
 
     //SEPARADOR
+    /**
+     * Separador
+     */
     SEPARADOR(20,"SEPARADOR"),
 
 
     //OTROS
 
-    /**Token invalido */
+    /**
+     * Token invalido 
+     */
     ERROR(-1, "ERROR"), 
 
     ;

@@ -24,32 +24,67 @@ public class Lexema {
         this.pos = pos;
     }
 
+    /**
+     * regresea un string
+     * @return String
+     */
     public String getLine() {
         return line;
     }
+
+    /**
+     * define el string
+     * @param line string de la linea
+     */
     public void setLine(String line) {
         this.line = line;
     }
+
+    /**
+     * regresa el estado final
+     * @return regresa el estado final int
+     */
     public int getEstado() {
         return estado;
     }
 
+    /**
+     * define el estado final int
+     * @param estado final int de la estado
+     */
     public void setEstado(int estado) {
         this.estado = estado;
     }
 
+    /**
+     * regresa el token
+     * @return regresa Token
+     */
     public Token getToken() {
         return token;
     }
 
+
+    /**
+     * define token
+     * @param token tipo de token
+     */
     public void setToken(Token token) {
         this.token = token;
     }
 
+    /**
+     * regresa la posicion
+     * @return regresa posicion int 
+     */
     public int[] getPos() {
         return pos;
     }
 
+    /**
+     * define la posicion
+     * @param pos posicion int
+     */
     public void setPos(int[] pos) {
         this.pos = pos;
     }

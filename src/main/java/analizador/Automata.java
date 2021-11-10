@@ -77,7 +77,7 @@ public class Automata {
      * Metodo que se encarga de devolver el siguiente movimiento en la matriz 
      * @param estadoActual    recibe el estado actual en el que se encuentra la matriz
      * @param tipoCaracter    recibe el tipo caracter a evaluar dentro de la matriz
-     * @return
+     * @return regresa un int
      */
     public int getNextEstado(int estadoActual, int tipoCaracter){
         int result = -1; //si fuera error        
@@ -85,6 +85,7 @@ public class Automata {
         if(tipoCaracter>=0 && tipoCaracter<=10 && estadoActual!=-1){ //solo hay 11 tipos de caracter por lo mismo se coloca el 10 porque inicia en 0
             result= estados[estadoActual][tipoCaracter];
         }
+
 
         return result;
     }
@@ -200,7 +201,7 @@ public class Automata {
             result =10;
         }
 
-        
+     
         return result;
     }
 
@@ -215,20 +216,15 @@ public class Automata {
 
 
 
-    /*
-    *Metodo encargado de continuar leer el texto mientras recorre cada char de la palabra a analizar
-    */
+    /**
+     * Metodo encargado de continuar leer el texto mientras recorre cada char de la palabra a analizar
+     */
     public void leeTexto(){
-
-    
-        //reporte.resetContadores(); //Aqui se resetean los valores de los contadores, al iniciar un nuevo analisis
-        //reporte.resetArrays(); //Aqui se resetean los arrays con las palabras y posicones de error
         reporte.cleanReport();
         while(posicion<texto.length()){
             leePalabra();
         }
 
-        
     }
 
 
@@ -237,7 +233,7 @@ public class Automata {
 
     /**
      * Metodo encargado de analizar cada char de la palabra
-    */
+     */
     public void leePalabra(){
         StringBuilder palabra = new StringBuilder();
         estadoActual =0;
