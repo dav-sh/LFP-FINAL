@@ -1,12 +1,24 @@
 package ventanas;
 
+
+/**
+ * Clase encargada del undo y redo del archivo de texto
+ */
 public class EditarTxt {
     PanelMenu menu;
 
+    /**
+     * Constructor de la clase
+     * @param menu Area donde se quiera trabajar
+     */
     public EditarTxt(PanelMenu menu){
         this.menu = menu;
     }
 
+
+    /**
+     * Metodo deshacer la clase
+     */
     public void deshacer(){
         try {
             menu.edit.undo();
@@ -16,7 +28,9 @@ public class EditarTxt {
         }
     }
     
-    
+    /**
+     * Metodo rehacer la clase
+     */
     public void rehacer(){
         try {
             menu.edit.redo();

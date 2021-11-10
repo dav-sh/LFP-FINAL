@@ -1,10 +1,22 @@
 package analizador;
 
+
+/**
+ * Clase encargada de los Lexemas
+ */
 public class Lexema {
     private String line;
     private int estado;
     private Token token;
     private int[]pos;
+
+    /**
+     * Constructor de la clase lexema
+     * @param line String con el lexema
+     * @param estado estado de finalizacion
+     * @param token tipo de token guardado
+     * @param pos posicion en el documento
+     */
     public Lexema(String line, int estado, Token token,int[] pos) {
         this.line = line;
         this.estado = estado;

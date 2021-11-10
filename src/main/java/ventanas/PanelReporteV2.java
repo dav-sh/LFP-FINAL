@@ -8,16 +8,32 @@ import analizador.Lexema;
 import analizador.Token;
 import reportes.ReporteV2;
 
+
+/**
+ * Clase encargada de imprimir los reportes
+ */
 public class PanelReporteV2 extends JPanel{
 
-
+    
     ReporteV2 report;
+
+
+    /**
+     * Constructor la clase
+     * @param hasError boolean encargado de indicarnos si existe un error o no en el documetno de origen
+     * @param reporte archivo de tipo ReporteV2 que contiene la informacion a imprimir
+     */
     public PanelReporteV2(boolean hasError, ReporteV2 reporte){
         this.report = reporte;
         this.setLayout(new GridBagLayout());
         printReport(hasError);
     }
 
+
+    /**
+     * Metodo encargado de imprimir el report
+     * @param hasError dependiendo si es true or false imprima cierta informacion
+     */
     private void printReport(boolean hasError){
         DefaultTableModel model = new DefaultTableModel();
         JTable table = new JTable(model);
@@ -39,7 +55,11 @@ public class PanelReporteV2 extends JPanel{
         this.add(scrollPane,c);
     }
     
-    
+    /**
+     * Metodo encargado de llenar la tabla coninformacion
+     * @param hasError dependiendo si es true or false llenra la tabla con cierta informacion
+     * @param model modelo de la tabla
+     */
     private void fillJTable(boolean hasError, DefaultTableModel model ){
         Lexema [] lexem = null;
         if(hasError){
